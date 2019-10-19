@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Pan">
+
+    <insert id="insertStudent" parameterType="com.pan.pojo.Student">
+        <!--放sql语句,?放属性名  -->
+        insert into student1(name,age,score) values(#{name},#{age},#{score})
+    </insert>
+
+    <resultMap id="stuMap" type="Student">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <!-- <result column="name" property="name" jdbcType="VARCHAR" /> -->
+        <result column="name" property="name" jdbcType="VARCHAR" typeHandler="com.pan.handler.MyHandler"/>
+        <!--这句和上面的那句结果一样的<result column="name" property="name" typeHandler="com.pan.handler.MyHandler"/> -->
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="score" property="score" jdbcType="DOUBLE" />
+    </resultMap>
+
+    <select id="selectById" parameterType="int" resultMap="stuMap">
+        select * from student1 where id = #{xxx}
+    </select>
+</mapper>
