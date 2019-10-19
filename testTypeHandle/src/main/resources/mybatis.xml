@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ 	<!--注册连接DB四要素的属性文件  -->
+ 	<properties resource="jdbc.properties"/>
+ 	<!--定义类型别名,别名写一般类名 -->
+ 	<!--设置整个应用的常量值  -->
+ 	<settings>
+ 		<!--延迟加载的总开关  -->
+ 		<setting name="lazyLoadingEnabled" value="true"/>
+ 		<!--侵入式加载的总开关  -->
+ 		<setting name="aggressiveLazyLoading" value="false"/>
+</settings>
+ 	<typeAliases>
+ 		<!-- <typeAlias type="com.pan.beans.Student" alias="Student"/> -->
+ 		<!--默认将这个包里的所有的简单类名当做别名  -->
+ 		<package name="com.pan.pojo"/>
+ 	</typeAliases>
+
+	<!--导入自定义的typeHandle-->
+	<typeHandlers>
+		<typeHandler handler="com.pan.handler.MyHandler"/>
+	</typeHandlers>
+ 	<!-- 配置运行环境 -->
+ 	<environments default="mysql">
+ 		<environment id="mysql">
+ 		<!--事务管理器  type="JDBC"表示使用JDBC默认的事务管理-->
+ 			<transactionManager type="JDBC"/>
+ 		<!--type="POOLED" mybatis默认的数据库连接池  -->
+ 			<dataSource type="POOLED">
+ 				<!--连接DB资源的四要素  -->
+ 				<property name="driver" value="${jdbc.driver}"/>
+ 				<property name="url" value="${jdbc.url}"/>
+ 				<property name="username" value="${jdbc.user}"/>
+ 				<property name="password" value="${jdbc.password}"/>
+ 			</dataSource>
+ 		</environment>
+ 	</environments>
+ 	
+ 	<!-- 注册映射文件 -->
+ 	<mappers>
+ 		<package name="com.pan.dao"/>
+ 	</mappers>
+ </configuration>

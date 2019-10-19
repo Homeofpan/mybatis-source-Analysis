@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pan.dao.ICountryDao">
+	<select id="selectMinisterByCountry" resultType="Minister">
+		select mid,mname from minister where countryid =#{ooo}
+	</select>
+	<resultMap type="Country" id="countryMap">
+		<id column="cid" property="cid" jdbcType="INTEGER"/>
+		<!--如果这里标签里面加入了jdbcType的话,MyHandle里面的@MappedJdbcTypes中的配置jdbc类型则忽略-->
+		<result column="cname" property="cname" jdbcType="VARCHAR" typeHandler="com.pan.handler.MyHandler"/>
+		<!-- 与上面的作用一样
+			<result column="cname" property="cname"  typeHandler="com.pan.handler.MyHandler"/>
+		-->
+		<!--property中放关联属性  ofType指封装的类型-->
+		<collection property="ministers" ofType="Minister" select="selectMinisterByCountry" column="cid"/>
+	</resultMap>
+	<select id="selectCountryById" resultMap="countryMap">
+			select cid,cname from country where cid=#{xx}
+	</select>
+</mapper>
